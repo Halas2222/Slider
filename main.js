@@ -45,6 +45,24 @@ const changeSlide = () => {
     changeDots()
 }
 
-setInterval(changeSlide, time)
+let indexInterval = setInterval(changeSlide, time)
+
+const newSlide = (e) => {
+    if (e.keyCode == 37 || e.keyCode == 39) {
+        clearInterval(indexInterval);
+        e.keyCode == 37 ? active-- : active++;
+
+        if (active === slideList.length) {
+            active = 0;
+        } else if (active < 0) {
+            active = slideList.length - 1;
+        }
+        images.src = slideList[active].image;
+        txt.textContent = slideList[active].text;
+        changeDots()
+        indexInterval = setInterval(changeSlide, time)
+    }
+}
 
 
+window.addEventListener('keydown', newSlide)
